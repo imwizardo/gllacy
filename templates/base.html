@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Gllacy | {% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %} {% endblock %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Minecraftia&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="container header">
+    <a href="{% url 'home_url' %}"><img src="{% static 'svg/logo.svg' %}" alt="logo" class="logo"></a>
+    <nav class="nav">
+        <ul class="nav_list ">
+            <li><a href="{% url 'catalog_url' %}">Каталог</a></li>
+            <li><a href="">Доставка и оплата</a></li>
+            <li><a href="{% url 'personal_account_url' %}">Личный кабинет</a></li>
+            {% if user.is_authenticated and user.is_staff %}
+            <li><a href="{% url 'admin:index' %}">Админка</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <ul class="header_buttons">
+        <li class="modal_container">
+            <button class="btn_search header_button" id="btn_search">Поиск</button>
+            <div class="modal modal_search" id="modal_search">
+                <form action="{% url 'search_url' %}" method="GET">
+                    <input type="text" placeholder="Крем-брюле" class="search_pattern" name="search_value">
+                </form>
+            </div>
+        </li>
+        {% if not user.is_authenticated %}
+        <li class="modal_container">
+            <button class="btn_enter header_button" id="btn_enter">Вход</button>
+            <div class="modal modal_enter" id="modal_enter">
+                <form action="{% url 'login_url' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="username" placeholder="Введите логин" class="enter_form">
+                    <input type="password" name="password" placeholder="••••••••" class="enter_form">
+                    <button class="button btn_enter_profile" type="submit">Войти</button>
+                </form>
+                <a href="{% url 'register_url' %}">Регистрация</a>
+                <a href="{% url 'password_reset' %}">Восстановить пароль</a>
+            </div>
+        </li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li>
+            <form action="{% url 'logout_url' %}" method="POST">
+                {% csrf_token %}
+                <button class="btn_enter header_button">Выйти</button>
+            </form>
+        </li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li class="modal_container">
+            <button class="btn_cart header_button" id="btn_cart">Корзина</button>
+            <div class="modal cart" id="modal_cart">
+                {% include "cart.html" %}
+            </div>
+
+        </li>
+        {% endif %}
+    </ul>
+</header>
+
+{% block content %}
+{% endblock %}
+
+<footer class="container footer">
+    <ul class="footer_social">
+        <li>
+            <a href="">
+                <img src="{% static 'svg/twitter.svg' %}" alt="twitter">
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <img src="{% static 'svg/instagram.svg' %}" alt="instagram">
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <img src="{% static 'svg/fb.svg' %}" alt="facebook">
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <img src="{% static 'svg/vk.svg' %}" alt="vk">
+            </a>
+        </li>
+    </ul>
+    <ul class="footer_menu">
+        <li class="footer_docs_suppliers">
+            <img src="{% static 'svg/heart.svg' %}" alt="" class="footer_heart">
+            <a href="" class="footer_docs">Для поставщиков</a>
+        </li>
+        <li>
+            <a href="" class="footer_docs">О производстве</a>
+        </li>
+        <li>
+            <a href="" class="footer_docs">Наши документы</a>
+        </li>
+        <li>
+            <a href="" class="footer_docs">Экологические стандарты</a>
+        </li>
+    </ul>
+    <div class="made_by">
+        <img src="{% static 'svg/logo-htmlacademy.svg' %}" alt="htmlacademy" width="109">
+        <p>Сделано в <a href="" class="dev">HTML Academy</a> © 2019</p>
+    </div>
+</footer>
+<script src="{% static 'js/script.js' %}"></script>
+{% block extra_js %} {% endblock %}
+</body>
+</html>

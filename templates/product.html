@@ -1,0 +1,10 @@
+{% load static %}
+<li class="hits_item">
+    <a href="{% url 'add_to_cart_url' product.id %}" class="product_text">
+    {% if product.is_hit %}
+    <img src="{% static 'svg/hit.svg' %}" class="hit_image">
+    {% endif %}
+    <img src="{{product.image.url}}" alt="Хит 1">
+    <p class="hits_price">{{product.price}}₽<span class="hits_kg">/кг</span></p>
+    <p class="hits_text">{{product.name}}</p></a>
+</li>

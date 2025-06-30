@@ -1,0 +1,15 @@
+<table class="cart_table">
+    {% for cart_item in cart_items %}
+    <tr>
+        <td>
+            <form action="{% url 'delete_from_cart_url' cart_item.product.id %}" method="get"><button class="cart_delete"></button></form>
+        </td>
+        <td><img src="{{ cart_item.product.image.url }}" alt="{{ cart_item.product.name }}" width="33"></td>
+        <td class="cart_title">{{ cart_item.product.name }}</td>
+        <td class="cart_mult">{{ cart_item.quantity }},0 кг х <span class="price_per_kilo">{{ cart_item.product.price }} руб</span></td>
+        <td class="cart_price">{{ cart_item.total_price }} руб</td>
+    </tr>
+    {% endfor %}
+</table>
+<h3 class="total_price">Итого: {{ cart_total_sum }} руб.</h3>
+<button class="button place_order">Оформить заказ</button>

@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Главная {% endblock %}
+{% block content %}
+<main>
+    <h1 class="visually-hidden">Gllacy</h1>
+    <section class="special_offers container">
+        <h2 class="visually-hidden">Спецпредложения</h2>
+        <ul>
+            <li class="special_offer special_offer1 special_offer_active">
+                <!-- <img src="images/ice_cream1.png" alt="Мороженое 1">
+                <img src="images/ice_cream2.png" alt="Мороженое 2"> -->
+                <h3 class="special_offer_title">Крем-брюле и пломбир<br> с малиновым джемом</h3>
+                <button class="button offers_button">Давайте оба!</button>
+            </li>
+            <li class="special_offer special_offer2">
+                <!-- <img src="images/ice_cream3.png" alt="Мороженое 3">
+                <img src="images/ice_cream4.png" alt="Мороженое 4"> -->
+                <h3 class="special_offer_title">Шоколадный пломбир<br> и лимонный сорбет</h3>
+                <button class="button offers_button">Давайте оба!</button>
+            </li>
+            <li class="special_offer special_offer3">
+                <!-- <img src="images/ice_cream5.png" alt="Мороженое 5">
+                <img src="images/ice_cream6.png" alt="Мороженое 6"> -->
+                <h3 class="special_offer_title">Пломбир с помадкой<br> и клубничный щербет</h3>
+                <button class="button offers_button">Давайте оба!</button>
+            </li>
+        </ul>
+        <ul class="special_offers_buttons">
+            <li>
+                <button class="offer_button_active switcher" id="switcher_1">1</button>
+            </li>
+            <li>
+                <button class="switcher" id="switcher_2">2</button>
+            </li>
+            <li>
+                <button class="switcher" id="switcher_3">3</button>
+            </li>
+        </ul>
+
+    </section>
+    <section class="promotions container">
+        <h2 class="visually-hidden">Акции</h2>
+        <ul class="promotions_list">
+            <li class="promotions_raspberry promotion">
+                <h3>Малинка даром!</h3>
+                <p>При покупке 2 кг любого фруктового мороженого, добавим в ваш заказ банку малинового варенья
+                    бесплатно.</p>
+                <button class="button">Хочу варенье!</button>
+            </li>
+            <li class="promotions_chocolate promotion">
+                <h3>Шоколодаки даром!</h3>
+                <p>При покупке 2 кг пломбира, добавим в ваш заказ упаковку вкуснейшей шоколадной присыпки совершенно
+                    бесплатно.</p>
+                <button class="button">Хочу шоколадки!</button>
+            </li>
+        </ul>
+    </section>
+    <section class="container">
+        <h2 class="visually-hidden">Хиты продаж</h2>
+        <ul class="hit_list">
+        {% for product in products %}
+        {% include 'product.html' %}
+        {% endfor %}
+        </ul>
+    </section>
+    <section class="about_card container">
+        <h2 class="about visually-hidden">О магазине</h2>
+        <b class="about">Магазин Глэйси — это онлайн- и офлайн-магазин по продаже мороженого собственного производства
+            на развес</b>
+        <ul class="about_items">
+            <li class="about_ice">Все наше мороженое изготавливается на собственном производстве, с использованием
+                современного оборудования и проверенных временем технологий.
+            </li>
+            <li class="about_cow">Закупка ингредиентов производится только у проверенных фермерских хозяйств и компаний,
+                с которыми нас связывает долговременное сотрудничество.
+            </li>
+            <li class="about_leaf">Для приготовления мороженого используются настоящие сливки и молоко высочайшего
+                качества. Все дополнительные ингредиенты и добавки произведены из натурального, экологически чистого
+                сырья.
+            </li>
+            <li class="about_temp">Доставка нашего мороженого до заказчиков осуществляется в специальном термопаке,
+                который не дает мороженому растаять в пути и позволяет сохранить превосходный вкус.
+            </li>
+        </ul>
+    </section>
+    <div class="section_wrapper container">
+        <section class="new_our_blog">
+            <h2 class="visually-hidden">Новое в нашем блоге</h2>
+            <a href="">10 способов сервировки<br> фруктовых щербетов к<br> столу</a>
+        </section>
+        <section class="news_letter">
+            <p class="newsletter_text">Подпишитесь на нашу сладкую рассылку и будете всегда в курсе всего самого
+                вкусного,
+                что у нас происходит. Обещаем не спамить и не слать всякой ненужной ерунды. Честно =)</p>
+            <form action="{% url 'email_form_url' %}" method="post">
+                {% csrf_token %}
+                <input type="email" class="newsletter_input" placeholder="email@example.com" name="email">
+                <button class="button" type="submit">Отправить</button>
+            </form>
+        </section>
+    </div>
+    <section class="map">
+        <h2 class="visually-hidden">Контактная информация</h2>
+        <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Ac5c7f516bf6a1d246418979ef7a5b1b8d911df1115d181a0a8a54a8002810ac1&amp;source=constructor"
+                width="1200" height="430" frameborder="0"></iframe>
+        <div class="contacts">
+            <p class="address_title">Адрес главного офиса<br>и офлайн-магазина:</p>
+            <p class="address">ул. Большая Конюшенная 19/8, Санкт-Петербург</p>
+            <p class="for_smartphone">Для заказов по телефону:</p>
+            <p class="phone_number">8 812 450-25-25</p>
+            <p class="smartphone_time">(с 10 до 20 ежедневно)</p>
+            <button class="button button_map" id="feedback_btn">Форма обратной связи</button>
+        </div>
+    </section>
+    <div class="feedback_modal" id="feedback_modal">
+        <b class="feedback_text">Мы обязательно вам ответим!</b>
+        <button class="feedback_close" id="feedback_modal_close"></button>
+            <form action="{% url 'feedback_form_url' %}" method="post">
+                {% csrf_token %}
+                <input type="text" placeholder="Имя Фамилия" class="feedback_field" name="name">
+                <input type="email" placeholder="email@example.com" class="feedback_field" name="email">
+                <textarea type="text" placeholder="В свободной форме" class="feedback_field feedback_message" name="text"></textarea>
+                <button class="button feedback_button" type="submit">Отправить</button>
+        </form>
+    </div>
+</main>
+{% endblock %}

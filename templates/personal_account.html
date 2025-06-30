@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Каталог {% endblock %}
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{message}}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+<h2>Редактирование профиля</h2>
+<form class="" action="{% url 'personal_account_url' %}" method="POST">
+    {% csrf_token %}
+    {{profile_form}}
+    <button type="submit" name="profile_submit">Отправить</button>
+</form>
+<h2 style="margin-top: 50px">Изменение пароля</h2>
+<form class="" action="{% url 'personal_account_url' %}" method="POST">
+    {% csrf_token %}
+    {{password_form}}
+    <button type="submit" name="password_submit">Отправить</button>
+</form>
+<style>
+    .messages {
+        list-style-type: none;
+        padding: 0;
+    }
+    .messages .success {
+        color: green;
+    }
+    .messages .error {
+        color: red;
+    }
+</style>
+{% endblock %}

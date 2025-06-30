@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Каталог {% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css"/>
+<link rel="stylesheet" href="{% static 'css/range.css' %}">
+{% endblock %}
+{% block content %}
+<main class="container">
+    <h1 class="title_catalog">Сливочное мороженое</h1>
+    <form action="{% url 'catalog_url' %}" class="filters" method="post">
+        {% csrf_token %}
+        <fieldset class="filters_fieldset">
+            <legend class="filters_legend">Сортировка:</legend>
+            <select class="filters_sorting">
+                <option>по популярности</option>
+                <option>сначала недорогие</option>
+                <option>сначала дорогие</option>
+                <option>по жирности</option>
+            </select>
+        </fieldset>
+        <fieldset class="filters_fieldset">
+            <legend class="filters_legend">
+                <output id="price-min">100</output>
+                руб. -
+                <output id="price-max">500</output>
+                руб.
+            </legend>
+            <div id="price-slider" class="range_input"></div>
+                <!-- Скрытые поля для отправки значений -->
+                <input type="hidden" id="min-price-input" name="min_price" value="100">
+                <input type="hidden" id="max-price-input" name="max_price" value="500">
+        </fieldset>
+        <fieldset class="filters_fieldset">
+            <legend class="filters_legend">Жирность:</legend>
+            <label class="filters_label">
+                <input type="radio" name="fat" class="filters_fat" value="0">
+                <span>0%</span>
+            </label>
+            <label class="filters_label">
+                <input type="radio" name="fat" class="filters_fat" value="up to 10">
+                <span>до 10%</span>
+            </label>
+            <label class="filters_label">
+                <input type="radio" name="fat" class="filters_fat" value="up to 30">
+                <span>до 30%</span>
+            </label>
+            <label class="filters_label">
+                <input type="radio" name="fat" class="filters_fat" value="above to 30">
+                <span>выше 30%</span>
+            </label>
+        </fieldset>
+        <fieldset class="filters_fieldset">
+            <legend class="filters_legend">Наполнители:</legend>
+            <label class="filters_label">
+                <input type="checkbox" class="filters_checkbox" name="fillers" value="chocolate">
+                <span>шоколадные</span>
+            </label>
+            <label class="filters_label">
+                <input type="checkbox" class="filters_checkbox" name="fillers" value="sugar_sprinkles">
+                <span>сахарные присыпки</span>
+            </label>
+            <label class="filters_label">
+                <input type="checkbox" class="filters_checkbox" name="fillers" value="fruits">
+                <span>фрукты</span>
+            </label>
+            <label class="filters_label">
+                <input type="checkbox" class="filters_checkbox" name="fillers" value="syrups">
+                <span>сиропы</span>
+            </label>
+            <label class="filters_label">
+                <input type="checkbox" class="filters_checkbox" name="fillers" value="jams">
+                <span>джемы</span>
+            </label>
+        </fieldset>
+        <button type="submit" class="filters_apply_button">Применить</button>
+    </form>
+    <ul class="hit_list">
+        {% for product in products %}
+        {% include 'product.html' %}
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
+<script src="{% static 'js/range.js' %}"></script>
+{% endblock %}
